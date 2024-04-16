@@ -16,11 +16,26 @@ const { checkForAuthenticationCookie } = require("./middlewares/authentication")
 
 const app = express();
 const PORT = process.env.PORT || 8000;
+const MONGO_URL = process.env.MONGO_URL;
 
-mongoose.connect(process.env.MONGO_URL)
-.then((e) => {
-    console.log("MongoDB connected!!!");
-});
+if (!PORT) {
+    console.error("PORT environment variable is not set.");
+    process.exit(1);
+}
+
+if (!MONGO_URL) {
+    console.error("MONGO_URL environment variable is not set.");
+    process.exit(1);
+}
+
+mongoose.connect(MONGO_URL)
+    .then(() => {
+        console.log("MongoDB connected!!!");
+    })
+    .catch((err) => {
+        console.error("Error connecting to MongoDB:", err);
+        process.exit(1);
+    });
 
 
 app.set('view engine', 'ejs');
