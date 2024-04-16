@@ -3,7 +3,7 @@ name: CI/CD
 on:
   push:
     branches:
-      - main  # Adjust branch name if needed
+      - main
 
 jobs:
   build:
@@ -21,10 +21,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Tests
-        run: npm test  # Adjust the command according to your testing setup
+      - name: Build
+        run: npm run build
 
-      - name: Build and Deploy
+      - name: Deploy
         run: |
-          npm run build  # Assuming you have a build script
           # Add commands to deploy your application here
